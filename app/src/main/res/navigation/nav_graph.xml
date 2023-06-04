@@ -17,5 +17,9 @@
         android:id="@+id/fragmentDetails"
         android:name="com.sample.simpsonsviewer.ui.fragments.FragmentDetails"
         android:label="@string/fragment_details"
-        tools:layout="@layout/fragment_details" />
+        tools:layout="@layout/fragment_details" >
+        <argument
+            android:name="related_topic"
+            app:argType="com.sample.simpsonsviewer.data.model.RelatedTopic" />
+    </fragment>
 </navigation>

@@ -14,7 +14,7 @@ class SimpsonsApi {
             synchronized(this) {
                 if (INSTANCE == null) {
                     INSTANCE = Retrofit.Builder()
-                        .baseUrl(ApiUtil.BASE_URL)
+                        .baseUrl(ApiUtil.BASE_API_URL)
                         .addConverterFactory(GsonConverterFactory.create())
                         .build()
                     temp = INSTANCE
@@ -33,5 +33,6 @@ object ApiUtil {
     // for images
     // https://duckduckgo.com/i/f0eb79ee.png
 
-     const val BASE_URL: String = "https://api.duckduckgo.com/"
+    const val BASE_URL:String = "https://duckduckgo.com"
+     const val BASE_API_URL: String = "https://api.duckduckgo.com/"
 }

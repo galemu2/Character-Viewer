@@ -4,5 +4,6 @@
 
     <string name="error_loading_items">Error loading items.</string>
     <string name="load_button">load</string>
-    
+    <string name="character_icon">character icon</string>
+
 </resources>

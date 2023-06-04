@@ -2,7 +2,6 @@ package com.sample.simpsonsviewer.ui.fragments
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -38,6 +37,7 @@ class ListsFragment : Fragment(R.layout.fragment_list), RelatedTopicAdapter.OnIt
         lifecycleScope.launch {
             viewModel.simpsonsCharacters.collectLatest { pagingData ->
                 adapter.submitData(pagingData = pagingData)
+
             }
         }
 
@@ -57,8 +57,8 @@ class ListsFragment : Fragment(R.layout.fragment_list), RelatedTopicAdapter.OnIt
     }
 
     override fun onItemClicked(relatedTopic: RelatedTopic) {
-        Toast.makeText(requireContext(), "${relatedTopic.Icon.URL}", Toast.LENGTH_SHORT).show()
-        val action = ListsFragmentDirections.actionFragmentListToFragmentDetails()
+
+        val action = ListsFragmentDirections.actionFragmentListToFragmentDetails(relatedTopic)
         findNavController().navigate(action)
     }
 

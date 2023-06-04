@@ -1,51 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="center"
-    android:gravity="center"
-    android:layout_margin="4dp"
-    android:orientation="horizontal"
+    android:background="@android:color/darker_gray"
+    android:orientation="vertical"
+    android:padding="8dp"
     tools:context=".ui.fragments.FragmentDetails">
 
 
-    <ImageView
-        android:id="@+id/image_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="4dp"
-        android:src="@drawable/ic_simpson_place_holder"
-        tools:layout_editor_absoluteX="8dp" />
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_margin="4dp"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="horizontal">
+
+        <ProgressBar
+            android:id="@+id/icon_loaded_state"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/image_icon"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_margin="8dp"
+            android:contentDescription="@string/character_icon"
+            android:src="@drawable/ic_simpson_place_holder"
+            android:visibility="gone"
+            tools:layout_editor_absoluteX="8dp" />
 
         <TextView
             android:id="@+id/item_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            tools:layout_editor_absoluteX="88dp"
-            tools:text="Item title" />
-
-        <TextView
-            android:id="@+id/item_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/ic_item_round_corner2"
             android:ellipsize="end"
-            android:textSize="14sp"
-            android:maxLines="3"
-            android:text="Item description"
-            tools:layout_editor_absoluteX="88dp" />
+            android:fontFamily="sans-serif-condensed"
+            android:gravity="center"
+            android:maxLines="1"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            tools:text="Item title" />
+
     </LinearLayout>
 
+
+    <TextView
+        android:id="@+id/item_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:background="@drawable/ic_item_round_corner"
+        android:ellipsize="end"
+        android:fontFamily="sans-serif-black"
+        android:padding="4dp"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        tools:layout_editor_absoluteX="88dp"
+        tools:text="Item description" />
 </LinearLayout>

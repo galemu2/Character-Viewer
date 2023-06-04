@@ -1,6 +1,5 @@
 package com.sample.simpsonsviewer.adaptors
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
@@ -8,7 +7,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.sample.simpsonsviewer.data.model.RelatedTopic
 import com.sample.simpsonsviewer.databinding.ItemNameBinding
-import com.sample.simpsonsviewer.util.Const.TAG
 
 class RelatedTopicAdapter(
     private val listener: OnItemClickListener,
@@ -34,16 +32,13 @@ class RelatedTopicAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
         item?.let { thisItem ->
-            Log.d(TAG, "onBindViewHolder: ${thisItem.Text}")
             holder.bind(thisItem)
         }
-        Log.d(TAG, "onBindViewHolder: $item")
     }
 
 
     interface OnItemClickListener {
-        fun onItemClicked(text: RelatedTopic)
-        // TODO - pass data to detail view
+        fun onItemClicked(relatedTopic: RelatedTopic)
     }
 
     inner class ViewHolder(private val binding: ItemNameBinding) :
