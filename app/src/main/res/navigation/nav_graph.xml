@@ -6,7 +6,7 @@
     app:startDestination="@id/fragmentList">
     <fragment
         android:id="@+id/fragmentList"
-        android:name="com.sample.simpsonsviewer.ui.fragments.FragmentList"
+        android:name="com.sample.simpsonsviewer.ui.fragments.ListsFragment"
         android:label="fragment_list"
         tools:layout="@layout/fragment_list" />
 </navigation>

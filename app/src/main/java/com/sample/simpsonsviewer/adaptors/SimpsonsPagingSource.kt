@@ -1,4 +1,4 @@
-package com.sample.simpsonsviewer.data
+package com.sample.simpsonsviewer.adaptors
 
 import android.util.Log
 import androidx.paging.PagingSource
@@ -6,10 +6,9 @@ import androidx.paging.PagingState
 import com.sample.simpsonsviewer.BuildConfig
 import com.sample.simpsonsviewer.api.SimpsonsService
 import com.sample.simpsonsviewer.data.model.RelatedTopic
+import com.sample.simpsonsviewer.util.Const.OFFSET_VALUE
+import com.sample.simpsonsviewer.util.Const.STARTING_PAGE
 import com.sample.simpsonsviewer.util.Const.TAG
-
-private const val STARTING_PAGE = 1
-private const val OFFSET_VALUE = 20
 
 class SimpsonsPagingSource(private val api: SimpsonsService) : PagingSource<Int, RelatedTopic>() {
 
@@ -33,7 +32,7 @@ class SimpsonsPagingSource(private val api: SimpsonsService) : PagingSource<Int,
 
             LoadResult.Page(
                 data = result,
-                prevKey = if (offset == STARTING_PAGE) null else offset - OFFSET_VALUE,
+                prevKey = if (offset ==  STARTING_PAGE) null else offset - OFFSET_VALUE,
                 nextKey = if (result.isEmpty()) null else offset + OFFSET_VALUE
             )
         } catch (e: Exception) {

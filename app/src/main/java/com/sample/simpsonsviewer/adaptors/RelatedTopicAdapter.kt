@@ -42,7 +42,7 @@ class RelatedTopicAdapter(
 
 
     interface OnItemClickListener {
-        fun onItemClicked(text: String)
+        fun onItemClicked(text: RelatedTopic)
         // TODO - pass data to detail view
     }
 
@@ -56,7 +56,7 @@ class RelatedTopicAdapter(
                 if (position != RecyclerView.NO_POSITION) {
                     val item = getItem(position)
                     item?.let {
-                        listener.onItemClicked(it.Text)
+                        listener.onItemClicked(it)
                     }
                 }
             }

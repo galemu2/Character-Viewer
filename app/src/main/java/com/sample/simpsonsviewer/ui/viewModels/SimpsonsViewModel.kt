@@ -5,10 +5,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.sample.simpsonsviewer.BuildConfig
-import com.sample.simpsonsviewer.data.SimpsonsRepository
+import com.sample.simpsonsviewer.data.repository.SimpsonsRepository
 import com.sample.simpsonsviewer.util.Const.TAG
 
-class SimpsonsViewModel(private var repository: SimpsonsRepository = SimpsonsRepository()) :
+class SimpsonsViewModel(repository: SimpsonsRepository = SimpsonsRepository()) :
     ViewModel() {
 
     var simpsonsCharacters = repository.getSimpsonsCharacters().flow.cachedIn(viewModelScope)
