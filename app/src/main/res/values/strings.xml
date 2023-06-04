@@ -1,6 +1,8 @@
 <resources>
-    <string name="app_name">Simpsons Characters</string>
+    <string name="app_name">Characters</string>
+    <string name="fragment_details">Character Details</string>
+
     <string name="error_loading_items">Error loading items.</string>
     <string name="load_button">load</string>
-
+    
 </resources>
