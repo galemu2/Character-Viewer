@@ -11,7 +11,18 @@
         tools:layout="@layout/fragment_list" >
         <action
             android:id="@+id/action_fragmentList_to_fragmentDetails"
-            app:destination="@id/fragmentDetails" />
+            app:destination="@id/fragmentDetails"
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right"
+            app:popEnterAnim="@anim/pop_from_left"
+            app:popExitAnim="@anim/pop_to_right" />
+        <action
+            android:id="@+id/action_fragmentList_to_fragmentSearchDialog"
+            app:destination="@id/fragmentSearchDialog"
+            app:enterAnim="@anim/from_bottom"
+            app:exitAnim="@anim/to_top"
+            app:popEnterAnim="@anim/pop_from_top"
+            app:popExitAnim="@anim/pop_to_bottom" />
     </fragment>
     <fragment
         android:id="@+id/fragmentDetails"
@@ -22,4 +33,9 @@
             android:name="related_topic"
             app:argType="com.sample.simpsonsviewer.data.model.RelatedTopic" />
     </fragment>
+    <fragment
+        android:id="@+id/fragmentSearchDialog"
+        android:name="com.sample.simpsonsviewer.ui.fragments.SearchFragment"
+        android:label="Search Characters"
+        tools:layout="@layout/fragment_search" />
 </navigation>

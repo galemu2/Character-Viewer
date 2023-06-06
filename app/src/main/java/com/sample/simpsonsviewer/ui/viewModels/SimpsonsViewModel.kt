@@ -1,43 +1,46 @@
 package com.sample.simpsonsviewer.ui.viewModels
 
-import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
-import com.sample.simpsonsviewer.BuildConfig
+import com.sample.simpsonsviewer.data.model.Characters
+import com.sample.simpsonsviewer.data.model.RelatedTopic
 import com.sample.simpsonsviewer.data.repository.SimpsonsRepository
-import com.sample.simpsonsviewer.util.Const.TAG
+import com.sample.simpsonsviewer.util.Resource
+import kotlinx.coroutines.launch
+import retrofit2.Response
 
-class SimpsonsViewModel(repository: SimpsonsRepository = SimpsonsRepository()) :
+class SimpsonsViewModel(private val repository: SimpsonsRepository = SimpsonsRepository()) :
     ViewModel() {
 
+
+    val networkState:MutableLiveData<Boolean> = MutableLiveData(false)
+
     var simpsonsCharacters = repository.getSimpsonsCharacters().flow.cachedIn(viewModelScope)
-    init {
-        if(BuildConfig.DEBUG){
-            Log.d(TAG, "item: $simpsonsCharacters")
+
+    var searchedCharacters: MutableLiveData<Resource<List<RelatedTopic>>> = MutableLiveData()
+
+    fun getSimpsonsCharacters(query: String) {
+        viewModelScope.launch {
+            searchedCharacters.postValue(Resource.Loading())
+            val response = repository.getSelectedCharacter()
+            searchedCharacters.postValue(handleSimpsonsApiResponse(response, query))
         }
     }
-//    var simpsonsCharacters: MutableLiveData<Resource<Characters>> = MutableLiveData()
 
-//    init {
-//        getSimpsonsCharacters()
-//    }
-//    fun getSimpsonsCharacters() {
-//        viewModelScope.launch {
-//            simpsonsCharacters.postValue(Resource.Loading())
-//            val response = repository.getSimpsonsCharacters()
-//            simpsonsCharacters.postValue(handleSimpsonsApiResponse(response))
-//        }
-//    }
-//
-//    private fun handleSimpsonsApiResponse(response: Response<Characters>): Resource<Characters> {
-//        if (response.isSuccessful) {
-//            response.body()?.let { characters ->
-//                Log.d("TAG", "Success: ${characters.RelatedTopics.size}")
-//                return Resource.Success(characters)
-//            }
-//        }
-//        Log.d("TAG", "ERROR.  ${response.message()}")
-//        return Resource.Error(response.message())
-//    }
+    private fun handleSimpsonsApiResponse(response: Response<Characters>, query: String):
+            Resource<List<RelatedTopic>> {
+        if (response.isSuccessful) {
+            response.body()?.let {
+
+                val data = it.RelatedTopics.filter { relatedTopic ->
+                    relatedTopic.Text.contains(query, ignoreCase = true)
+                }
+
+                return Resource.Success(data = data)
+            }
+        }
+        return Resource.Error(response.message())
+    }
 }

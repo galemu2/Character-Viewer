@@ -24,16 +24,16 @@ class SimpsonsPagingSource(private val api: SimpsonsService) : PagingSource<Int,
         Log.d(TAG, "load: Loading data")
         return try {
             val offset = params.key ?: 1
-            val result = api.getSimpsonsCharacters().RelatedTopics
+            val result = api.getSimpsonsCharacters().body()?.RelatedTopics?: emptyList()
 
             if (BuildConfig.DEBUG) {
-                Log.d(TAG, "load: ${result.size}")
+                Log.d(TAG, "load: ${result?.size}")
             }
 
             LoadResult.Page(
                 data = result,
                 prevKey = if (offset ==  STARTING_PAGE) null else offset - OFFSET_VALUE,
-                nextKey = if (result.isEmpty()) null else offset + OFFSET_VALUE
+                nextKey = if (result.isNullOrEmpty()) null else offset + OFFSET_VALUE
             )
         } catch (e: Exception) {
 
