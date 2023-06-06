@@ -1,10 +1,6 @@
 package com.sample.simpsonsviewer.ui.fragments
 
-import android.content.Context
-import android.net.ConnectivityManager
-import android.net.Network
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,12 +10,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
-import com.sample.simpsonsviewer.BuildConfig
 import com.sample.simpsonsviewer.adaptors.RelatedTopicAdapter
 import com.sample.simpsonsviewer.data.model.RelatedTopic
 import com.sample.simpsonsviewer.databinding.FragmentListBinding
 import com.sample.simpsonsviewer.ui.viewModels.SimpsonsViewModel
-import com.sample.simpsonsviewer.util.Resource
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -31,18 +25,6 @@ class ListsFragment : Fragment(), RelatedTopicAdapter.OnItemClickListener {
         get() = _binding!!
 
     private val viewModel: SimpsonsViewModel by viewModels()
-
-    private val networkCallback = object : ConnectivityManager.NetworkCallback() {
-        override fun onAvailable(network: Network) {
-            super.onAvailable(network)
-            viewModel.networkState.postValue(true)
-        }
-
-        override fun onLost(network: Network) {
-            super.onLost(network)
-            viewModel.networkState.postValue(false)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -61,22 +43,6 @@ class ListsFragment : Fragment(), RelatedTopicAdapter.OnItemClickListener {
         lifecycleScope.launch {
             viewModel.simpsonsCharacters.collectLatest { pagingData ->
                 adapter.submitData(pagingData = pagingData)
-            }
-        }
-
-        registerNetworkStateMonitor()
-
-        if (viewModel.networkState.value!!) {
-            viewModel.getSimpsonsCharacters("Barney")
-            viewModel.searchedCharacters.observe(viewLifecycleOwner) {
-                if (it is Resource.Success)
-                    it.data?.forEach { relatedTopic ->
-
-                        if (BuildConfig.DEBUG) {
-                            Log.d("RelatedTopic", "onViewCreated: ${relatedTopic.Text}")
-                        }
-                    }
-
             }
         }
 
@@ -103,12 +69,6 @@ class ListsFragment : Fragment(), RelatedTopicAdapter.OnItemClickListener {
             }
 
         }
-    }
-
-    private fun registerNetworkStateMonitor() {
-        val conManager =
-            activity?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        conManager.registerDefaultNetworkCallback(networkCallback)
     }
 
     private fun setRecyclerViewAdapter(): RelatedTopicAdapter {

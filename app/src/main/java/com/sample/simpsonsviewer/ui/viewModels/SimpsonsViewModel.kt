@@ -29,6 +29,7 @@ class SimpsonsViewModel(private val repository: SimpsonsRepository = SimpsonsRep
         }
     }
 
+
     private fun handleSimpsonsApiResponse(response: Response<Characters>, query: String):
             Resource<List<RelatedTopic>> {
         if (response.isSuccessful) {
