@@ -36,7 +36,9 @@ class SimpsonsViewModel(private val repository: SimpsonsRepository = SimpsonsRep
             response.body()?.let {
 
                 val data = it.RelatedTopics.filter { relatedTopic ->
-                    relatedTopic.Text.contains(query, ignoreCase = true)
+                    val index = relatedTopic.Text.indexOf("-")
+                    val topic = relatedTopic.Text.substring(0, index)
+                    topic.contains(query, ignoreCase = true)
                 }
 
                 return Resource.Success(data = data)

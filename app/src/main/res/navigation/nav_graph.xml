@@ -37,5 +37,15 @@
         android:id="@+id/fragmentSearchDialog"
         android:name="com.sample.simpsonsviewer.ui.fragments.SearchFragment"
         android:label="Search Characters"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_fragmentSearchDialog_to_fragmentDetails"
+            app:destination="@id/fragmentDetails"
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right"
+            app:popEnterAnim="@anim/pop_from_left"
+            app:popExitAnim="@anim/pop_to_right"
+            app:popUpTo="@id/fragmentList"
+            app:popUpToInclusive="false" />
+    </fragment>
 </navigation>

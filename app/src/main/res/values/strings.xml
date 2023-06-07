@@ -6,5 +6,7 @@
     <string name="load_button">load</string>
     <string name="character_icon">character icon</string>
     <string name="search">search</string>
+    <string name="search_view_background">search view background</string>
+    <string name="empty_list">empty list</string>
 
 </resources>

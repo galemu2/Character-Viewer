@@ -9,4 +9,8 @@ data class RelatedTopic(
     val Icon: Icon,
     val Result: String,
     val Text: String
-):Parcelable
+):Parcelable{
+    override fun toString(): String {
+        return "$Text"
+    }
+}
