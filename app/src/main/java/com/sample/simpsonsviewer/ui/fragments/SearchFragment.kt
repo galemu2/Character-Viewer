@@ -52,8 +52,10 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         val adapter = setSearchListAdapterToRecyclerView {
-            val action = SearchFragmentDirections.actionFragmentSearchDialogToFragmentDetails(it)
-            findNavController().navigate(directions = action)
+
+            val bundle = Bundle()
+            bundle.putParcelable("relatedTopic", it)
+            findNavController().navigate(R.id.action_fragmentSearchDialog_to_fragmentDetails, bundle)
 
         }
 

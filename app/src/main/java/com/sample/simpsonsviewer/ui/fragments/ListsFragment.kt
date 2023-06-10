@@ -8,8 +8,10 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
+import com.sample.simpsonsviewer.R
 import com.sample.simpsonsviewer.adaptors.RelatedTopicAdapter
 import com.sample.simpsonsviewer.data.model.RelatedTopic
 import com.sample.simpsonsviewer.databinding.FragmentListBinding
@@ -38,7 +40,8 @@ class ListsFragment : Fragment(), RelatedTopicAdapter.OnItemClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = setRecyclerViewAdapter()
+        val itemDetailFragmentContainer: View? = view.findViewById(R.id.fragmentContainerViewTablet)
+        val adapter = setRecyclerViewAdapter(itemDetailFragmentContainer)
 
         lifecycleScope.launch {
             viewModel.simpsonsCharacters.collectLatest { pagingData ->
@@ -51,8 +54,12 @@ class ListsFragment : Fragment(), RelatedTopicAdapter.OnItemClickListener {
         }
 
         binding.fab.setOnClickListener {
-            val action = ListsFragmentDirections.actionFragmentListToFragmentSearchDialog()
-            findNavController().navigate(action)
+
+            if (itemDetailFragmentContainer != null) {
+
+            } else {
+                findNavController().navigate(R.id.action_fragmentList_to_fragmentSearchDialog)
+            }
         }
 
         updateComponentVisibilityState(adapter)
@@ -71,16 +78,26 @@ class ListsFragment : Fragment(), RelatedTopicAdapter.OnItemClickListener {
         }
     }
 
-    private fun setRecyclerViewAdapter(): RelatedTopicAdapter {
-        val adapter = RelatedTopicAdapter(this)
+    private fun setRecyclerViewAdapter(itemDettailFragmentContainer: View?): RelatedTopicAdapter {
+        val adapter = RelatedTopicAdapter(this, itemDettailFragmentContainer)
         binding.itemList.setHasFixedSize(true)
         binding.itemList.adapter = adapter
         return adapter
     }
 
-    override fun onItemClicked(relatedTopic: RelatedTopic) {
-        val action = ListsFragmentDirections.actionFragmentListToFragmentDetails(relatedTopic)
-        findNavController().navigate(action)
+    override fun onItemClicked(relatedTopic: RelatedTopic, itemDetailFragmentContainer: View?) {
+        val bundle = Bundle()
+        bundle.putParcelable("relatedTopic", relatedTopic)
+        if (itemDetailFragmentContainer != null) {
+            binding.fragmentContainerViewTablet?.visibility = View.VISIBLE
+            itemDetailFragmentContainer.findNavController().navigate(
+                R.id
+                    .nav_graph_tablet, bundle
+            )
+        } else {
+//            val action = ListsFragmentDirections.actionFragmentListToFragmentDetails(relatedTopic)
+            findNavController().navigate(R.id.action_fragmentList_to_fragmentDetails, bundle)
+        }
     }
 
     override fun onDestroy() {

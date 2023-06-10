@@ -1,6 +1,7 @@
 package com.sample.simpsonsviewer.adaptors
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
@@ -10,6 +11,7 @@ import com.sample.simpsonsviewer.databinding.ItemNameBinding
 
 class RelatedTopicAdapter(
     private val listener: OnItemClickListener,
+    private var itemDetailFragmentContainer: View?,
     diffCallback: DiffUtil.ItemCallback<RelatedTopic> = object : DiffUtil
     .ItemCallback<RelatedTopic>() {
         override fun areItemsTheSame(oldItem: RelatedTopic, newItem: RelatedTopic): Boolean {
@@ -38,7 +40,7 @@ class RelatedTopicAdapter(
 
 
     interface OnItemClickListener {
-        fun onItemClicked(relatedTopic: RelatedTopic)
+        fun onItemClicked(relatedTopic: RelatedTopic, itemDetailFragmentContainer: View?)
     }
 
     inner class ViewHolder(private val binding: ItemNameBinding) :
@@ -51,7 +53,7 @@ class RelatedTopicAdapter(
                 if (position != RecyclerView.NO_POSITION) {
                     val item = getItem(position)
                     item?.let {
-                        listener.onItemClicked(it)
+                        listener.onItemClicked(it, itemDetailFragmentContainer)
                     }
                 }
             }
