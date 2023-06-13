@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -27,6 +28,7 @@ class ListsFragment : Fragment(), RelatedTopicAdapter.OnItemClickListener {
         get() = _binding!!
 
     private val viewModel: SimpsonsViewModel by viewModels()
+    private var itemDetailFragmentContainer: View? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,13 +36,14 @@ class ListsFragment : Fragment(), RelatedTopicAdapter.OnItemClickListener {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentListBinding.inflate(inflater, container, false)
+       itemDetailFragmentContainer =  binding.root.findViewById(R.id.fragmentContainerViewTablet)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val itemDetailFragmentContainer: View? = view.findViewById(R.id.fragmentContainerViewTablet)
+
         val adapter = setRecyclerViewAdapter(itemDetailFragmentContainer)
 
         lifecycleScope.launch {
@@ -54,16 +57,13 @@ class ListsFragment : Fragment(), RelatedTopicAdapter.OnItemClickListener {
         }
 
         binding.fab.setOnClickListener {
-
-            if (itemDetailFragmentContainer != null) {
-
-            } else {
-                findNavController().navigate(R.id.action_fragmentList_to_fragmentSearchDialog)
-            }
+            findNavController().navigate(R.id.action_fragmentList_to_fragmentSearchDialog)
         }
 
         updateComponentVisibilityState(adapter)
+
     }
+
 
     private fun updateComponentVisibilityState(adapter: RelatedTopicAdapter) {
         adapter.addLoadStateListener { combinedLoadStates ->
@@ -72,7 +72,9 @@ class ListsFragment : Fragment(), RelatedTopicAdapter.OnItemClickListener {
                 progressBarContainer.isVisible = currentState is LoadState.Loading
                 itemList.isVisible = currentState is LoadState.NotLoading
                 listViewError.isVisible = currentState is LoadState.Error
+                // TODO search view is deactivated for tablets
                 fab.isVisible = currentState is LoadState.NotLoading
+                        && itemDetailFragmentContainer == null
             }
 
         }
