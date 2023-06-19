@@ -12,5 +12,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "Simpsons Character Viewer"
+rootProject.name = "Character Viewer"
 include ':app'

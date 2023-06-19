@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Simpsons Characters</string>
+    <string name="fragment_details">Character Details</string>
+
+</resources>

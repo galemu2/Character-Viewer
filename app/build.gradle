@@ -9,11 +9,11 @@ plugins {
 }
 
 android {
-    namespace 'com.sample.simpsonsviewer'
+    namespace 'com.sample.characterviewer'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.sample.simpsonsviewer"
+        applicationId "com.sample.characterviewer"
         minSdk 24
         targetSdk 33
         versionCode 1
@@ -43,7 +43,24 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+    flavorDimensions 'mode'
+    productFlavors {
+        simpsons {
+            dimension 'mode'
+            applicationId 'com.sample.simpsonsviewer'
+            resValue "string", "API_VALUE",  "https://api.duckduckgo.com/?q=simpsons+characters&format=json"
+            resValue "string", "app_name", "Simpsons Characters"
+        }
+        thewire {
+            dimension 'mode'
+            applicationId 'com.sample.wireviewer'
+            resValue "string", "API_VALUE", "https://api.duckduckgo.com/?q=the+wire+characters&format=json"
+            resValue "string", "app_name", "The Wire Characters"
+        }
+    }
 }
+
 
 dependencies {
 

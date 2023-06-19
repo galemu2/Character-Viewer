@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Characters</string>
+
     <string name="fragment_details">Character Details</string>
 
     <string name="error_loading_items">Error loading items.</string>
